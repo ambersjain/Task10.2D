@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="google-signin-client_id" content="YOUR_CLIENT_ID.apps.googleusercontent.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>iCrowdTask SignIn</title>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <hr>
+    <div class="row">
+      <aside class="col-sm-4">
+        <h4 class="card-title mb-4 mt-1">iCrowdTask Login</h4>
+        <div class="card">
+          <article class="card-body">
+            <a href="/" class="float-right btn btn-outline-primary">Sign up</a>
+            <h4 class="card-title mb-4 mt-1">Sign in</h4>
+            <form method='POST' action='/signin'>
+              <div class="form-group">
+                <label>Your email</label>
+                <input name="email" class="form-control" placeholder="Email" type="email">
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                <a class="float-right" href="/forgot">Forgot?</a>
+                <label>Your password</label>
+                <input name="password" class="form-control" placeholder="******" type="password">
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                <div class="checkbox">
+                  <label> <input name="rememberme" type="checkbox"> Save password </label>
+                </div> <!-- checkbox .// -->
+              </div> <!-- form-group// -->
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block"> Login </button>
+              </div> <!-- form-group// -->
+
+              <div class="row">
+                <div class="col-md-3">
+                  <a class="btn btn-outline-dark" style="width: 310px" href="/google" role="button" style="text-transform:none">
+                    <img width="20px" style="margin-right: 30px" alt="Google sign-in" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                    Login with Google
+                  </a>
+                </div>
+              </div>
+              <!-- <div class="form-group" id="my-signin2"><a href='/google'></a></div> -->
+            </form>
+          </article>
+
+        </div> <!-- card.// -->
+</body>
+
+</html>
