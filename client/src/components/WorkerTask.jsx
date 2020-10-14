@@ -3,7 +3,6 @@ import '../css/Card.css';
 
 const Card = (props) => {
 
-    console.log(props._id);
     const deleteTask = (_id) => {
         fetch('http://localhost:8080/reqtask/' + _id, {
             method: 'DELETE',
@@ -20,7 +19,7 @@ const Card = (props) => {
             <h4><b>{props.title}</b></h4>
             <p>{props.description}</p>
             <p>{props.date}</p>
-            <button onClick={deleteTask(props._id)}>Delete</button>
+            <button onClick={()=>deleteTask(props._id)}>Delete</button>
         </div>
     </div>)
 }
