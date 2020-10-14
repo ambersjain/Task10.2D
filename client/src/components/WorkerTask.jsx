@@ -4,6 +4,8 @@ import '../css/Card.css';
 const Card = (props) => {
 
     const deleteTask = (_id) => {
+        const newList = props.dataVar.filter((item)=>item._id !== _id);
+        props.setDataVar(newList);
         fetch('http://localhost:8080/reqtask/' + _id, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -13,6 +15,18 @@ const Card = (props) => {
                 console.log("Error:" + err)
             })
     }
+
+
+    // const deleteTask = (_id) => {
+    //     fetch('http://localhost:8080/reqtask/' + _id, {
+    //         method: 'DELETE',
+    //         headers: { 'Content-Type': 'application/json' },
+    //     })
+    //         .then(response => response.json())
+    //         .catch(err => {
+    //             console.log("Error:" + err)
+    //         })
+    // }
 
     return (<div className="card">
         <div className="container">
@@ -45,7 +59,7 @@ const CardList = (props) => {
         {loading ? <div>.......loading</div> :
             <div>
                 {dataVar.map((job, index) => {
-                    return <Card key={job._id} {...job} dataVar = {dataVar}></Card>;
+                    return <Card key={job._id} {...job} dataVar = {dataVar} setDataVar={setDataVar} ></Card>;
                 })}
             </div>}
 
