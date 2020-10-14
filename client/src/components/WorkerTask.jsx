@@ -2,11 +2,25 @@ import React, { useState, useEffect } from 'react';
 import '../css/Card.css';
 
 const Card = (props) => {
+
+    console.log(props._id);
+    const deleteTask = (_id) => {
+        fetch('http://localhost:8080/reqtask/' + _id, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+        })
+            .then(response => response.json())
+            .catch(err => {
+                console.log("Error:" + err)
+            })
+    }
+
     return (<div className="card">
         <div className="container">
             <h4><b>{props.title}</b></h4>
             <p>{props.description}</p>
             <p>{props.date}</p>
+            <button onClick={deleteTask(props._id)}>Delete</button>
         </div>
     </div>)
 }
@@ -32,7 +46,7 @@ const CardList = (props) => {
         {loading ? <div>.......loading</div> :
             <div>
                 {dataVar.map((job, index) => {
-                    return <Card key={job._id} {...job}></Card>;
+                    return <Card key={job._id} {...job} dataVar = {dataVar}></Card>;
                 })}
             </div>}
 

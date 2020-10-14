@@ -3,7 +3,6 @@ const router = require('express').Router();
 // Requester Task Model
 const ReqTask = require("../models/reqTask");
 
-
 router.get('/reqtask', (req, res) => {
     ReqTask.find()
     .then((entries) => {
@@ -38,5 +37,11 @@ router.post('/reqtask', (req, res) => {
         });
 })
 
+router.delete('/reqtask/:_id', (req, res) => {
+    ReqTask.deleteOne({ _id: req.params._id }, (err, foundWorker) => {
+      if (foundWorker) { console.log("This one deleted!");res.send(foundWorker) }
+      else { res.send("Worker account not deleted") }
+    })
+  })
 
 module.exports = router;
