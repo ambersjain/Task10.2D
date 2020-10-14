@@ -1,27 +1,10 @@
-import React, {Component} from 'react';
-//import '../css/Navbar.css';
-import { Menu } from 'semantic-ui-react';
+import React from 'react';
+import '../css/Navbar.css';
 
-export default class MenuExampleTabular extends Component {
-  state = { activeItem: 'New Requester Task' }
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
-  render() {
-    const { activeItem } = this.state
-    return (
-      <Menu>
-        <Menu.Item
-          name='New Requester Task'
-          active={activeItem === 'New Requester Task'}
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name='Worker Task'
-          active={activeItem === 'Worker Task'}
-          onClick={this.handleItemClick}
-        />
-      </Menu>
-    )
-  }
+const NavbarBoot = (props) => {
+  return (<div className="tab">
+  <button name= 'New Requester Task' onClick={props.onClick} className={props.activePage}>New Requester Task</button>
+  <button name='Worker Task' onClick={props.onClick} className={props.activePage}>Worker Task</button>
+</div>)
 }
+export default NavbarBoot;

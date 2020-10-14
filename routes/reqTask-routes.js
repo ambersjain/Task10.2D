@@ -5,20 +5,11 @@ const ReqTask = require("../models/reqTask");
 
 
 router.get('/reqtask', (req, res) => {
-
-    const reqTask = {
-        task_type: req.body.task_type,
-        title: req.body.title,
-        description: req.body.description,
-        worker_choice: req.body.worker_choice,
-        worker_decision: req.body.worker_decision,
-        worker_sentence: req.body.worker_sentence,
-        date: req.body.expiry_date,
-        require_worker: req.body.require_worker,
-        reward_per_response: req.body.reward_per_response,
-        number_of_workers: req.body.number_of_workers,
-    }
-    res.send(reqTask)
+    ReqTask.find()
+    .then((entries) => {
+        res.json(entries);
+    })
+    .catch(()=>res.send("Not found anything"));
 })
 
 router.post('/reqtask', (req, res) => {
