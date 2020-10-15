@@ -4,8 +4,10 @@ import '../css/Card.css';
 const Card = (props) => {
 
     const deleteTask = (_id) => {
-        const newList = props.dataVar.filter((item)=>item._id !== _id);
+        //delete from FE
+        const newList = props.dataVar.filter((item) => item._id !== _id);
         props.setDataVar(newList);
+        //delete from BE (db)
         fetch('http://localhost:8080/reqtask/' + _id, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
@@ -16,26 +18,27 @@ const Card = (props) => {
             })
     }
 
+    const [cardOpen, setCardOpen] = useState(false);
 
-    // const deleteTask = (_id) => {
-    //     fetch('http://localhost:8080/reqtask/' + _id, {
-    //         method: 'DELETE',
-    //         headers: { 'Content-Type': 'application/json' },
-    //     })
-    //         .then(response => response.json())
-    //         .catch(err => {
-    //             console.log("Error:" + err)
-    //         })
-    // }
 
-    return (<div className="card">
-        <div className="container">
-            <h4><b>{props.title}</b></h4>
-            <p>{props.description}</p>
-            <p>{props.date}</p>
-            <button onClick={()=>deleteTask(props._id)}>Delete</button>
-        </div>
-    </div>)
+    if (!cardOpen) {
+        return (<div className="card" onClick={() => setCardOpen(true)}>
+            <div className="container">
+                <h4><b>{props.title}</b></h4>
+                <p>{props.description}</p>
+                <p>{props.date}</p>
+                <button onClick={() => deleteTask(props._id)}>Delete</button>
+            </div>
+        </div>)
+    } else {
+        return (<div>
+            <h1>This is the card details</h1>
+            <h3>{props.title}</h3>
+            <h3>{props.description}</h3>
+            <h3>{props.date}</h3>
+            <button onClick={() => setCardOpen(false)}>Close</button>
+            </div>)
+    }
 }
 
 const CardList = (props) => {
@@ -59,7 +62,10 @@ const CardList = (props) => {
         {loading ? <div>.......loading</div> :
             <div>
                 {dataVar.map((job, index) => {
-                    return <Card key={job._id} {...job} dataVar = {dataVar} setDataVar={setDataVar} ></Card>;
+                    return <Card key={job._id}
+                    {...job}
+                    dataVar={dataVar}
+                    setDataVar={setDataVar} ></Card>;
                 })}
             </div>}
 
@@ -69,7 +75,8 @@ const CardList = (props) => {
 const WorkerTask = (props) => {
     if (props.activePage === "Worker Task") {
         return (
-            <div>
+            <div className="container">
+                <h2>Welcome, these are the tasks available for you.</h2>
                 <CardList />
             </div>
         )
