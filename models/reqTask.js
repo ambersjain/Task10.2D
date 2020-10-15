@@ -34,6 +34,9 @@ const reqTaskSchema = mongoose.Schema({
     number_of_workers: {
         type: String,
     },
+    image: {
+        type: String
+    }
 });
 
 

@@ -22,6 +22,8 @@ const RequesterTask = (props) => {
             setOption("decision");
         } else if (name === 'sentence') {
             setOption("sentence");
+        }  else if (name === 'imageUpload') {
+            setOption("imageUpload");
         }
 
     }
@@ -34,7 +36,8 @@ const RequesterTask = (props) => {
         number_of_workers: '',
         worker_choice: '',
         worker_decision: '',
-        worker_sentence: ''
+        worker_sentence: '',
+        image: ''
     })
 
     const handleChange = (event) => {
@@ -62,6 +65,7 @@ const RequesterTask = (props) => {
                 require_worker: stateVar.master_worker,
                 reward_per_response: stateVar.reward_per_response,
                 number_of_workers: stateVar.number_of_workers,
+                image: stateVar.image
             })
         })
             .then(response => response.json())
@@ -80,6 +84,7 @@ const RequesterTask = (props) => {
                     value1="choice"
                     value2="decision"
                     value3="sentence"
+                    value4="imageUpload"
                 />
                 <TaskDescription onChange={handleChange} />
                 <TaskSetup option={option} onChange={handleChange} />

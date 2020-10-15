@@ -38,6 +38,17 @@ const TaskType = (props) => {
                 />
                 <label className="form-check-label">Sentence-Level Task</label>
             </div>
+            <div className="form-check form-check-inline ml-3">
+                <input className="form-check-input"
+                    type="radio"
+                    name="imageUpload"
+                    value={props.value4}
+                    checked={props.radio === props.value4}
+                    onChange={props.onChange}
+                    onClick={props.onChange2}
+                />
+                <label className="form-check-label">Image Tagging</label>
+            </div>
         </div></div>)
 }
 
