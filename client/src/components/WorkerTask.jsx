@@ -37,13 +37,16 @@ const Card = (props) => {
             <h3>{props.description}</h3>
             <h3>{props.date}</h3>
             <button onClick={() => setCardOpen(false)}>Close</button>
-            </div>)
+        </div>)
     }
 }
 
 const CardList = (props) => {
     const [dataVar, setDataVar] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState("");
+    const [filteredTasks, setFilteredTasks] = useState([]);
+    const [year, setYear] = useState("2020");
 
     useEffect(() => {
         async function fetchData() {
@@ -57,19 +60,81 @@ const CardList = (props) => {
         fetchData();
     }, []);
 
+    // Filter state for searching titles and year dropdown
+    useEffect(() => {
+        setFilteredTasks(
+            dataVar.filter((data) =>
+                data.date.substring(0, 4) == year &&
+                data.title.toLowerCase().includes(search.toLowerCase())
+            ))
+    }, [year, search, dataVar]);
+
+
+    const yearHandler = (e) => {
+        console.log("Year selected is" + e.target.value);
+        setYear(e.target.value)
+    }
+
+    const clearFilter = e => {
+        setYear("2020");
+        setSearch("");
+    };
+
     return (<div className="cardList">
+        <input
+            type="text"
+            placeholder="Search Titles"
+            onChange={(e) => setSearch(e.target.value)}
+        />
+        <div className="container bg-light border mb-3">
+            {/* <button className="btn-primary m-3" onClick={datehandler}>Get all the past tasks</button> */}
+            {/* <button className="btn-primary m-3" onClick={getFutureDates}>Get all the future tasks</button> */}
+        </div>
+
+        <div>
+            <label> Year :  </label>
+            <p>{year}</p>
+            <select defaultValue={year} onChange={yearHandler}>
+                <option value ="2021">2021</option>
+                <option value="2020">2020</option>
+                <option value="2019">2019</option>
+                <option value="2018">2018</option>
+                <option value="2017">2017</option>
+                <option value="2016">2016</option>
+            </select>
+        </div>
+
+        <button onClick={clearFilter}>clear</button>
+
         {/* This syntax means if dataVar exists then only it will be rendered. */}
         {loading ? <div>.......loading</div> :
             <div>
-                {dataVar.map((job, index) => {
-                    return <Card key={job._id}
-                    {...job}
-                    dataVar={dataVar}
-                    setDataVar={setDataVar} ></Card>;
+                {filteredTasks.map((job, index) => {
+                    return <Card
+                        key={job._id}
+                        {...job}
+                        dataVar={dataVar}
+                        setDataVar={setDataVar} ></Card>;
                 })}
             </div>}
 
     </div>)
+}
+
+const Filter = (props) => {
+    const getPastDates = () => {
+        console.log(props.dataVar);
+        // apply filter here
+    }
+    const getFutureDates = () => {
+        console.log(props.dataVar);
+        //apply filter here
+    }
+    return (
+        <div className="container bg-light border mb-3">
+            <button className="btn-primary m-3" onClick={getPastDates}>Get all the past tasks</button>
+            <button className="btn-primary m-3" onClick={getFutureDates}>Get all the future tasks</button>
+        </div>)
 }
 
 const WorkerTask = (props) => {
