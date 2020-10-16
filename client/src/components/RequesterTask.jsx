@@ -22,7 +22,7 @@ const RequesterTask = (props) => {
             setOption("decision");
         } else if (name === 'sentence') {
             setOption("sentence");
-        }  else if (name === 'imageUpload') {
+        } else if (name === 'imageUpload') {
             setOption("imageUpload");
         }
 
@@ -51,8 +51,9 @@ const RequesterTask = (props) => {
     }
 
     const handleSubmit = () => {
+        console.log("HERE IT IS:" + stateVar.image)
         fetch('http://localhost:8080/reqtask', {
-            method: 'post',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 task_type: radio,
@@ -64,7 +65,6 @@ const RequesterTask = (props) => {
                 date: stateVar.expiry_date,
                 require_worker: stateVar.master_worker,
                 reward_per_response: stateVar.reward_per_response,
-                number_of_workers: stateVar.number_of_workers,
                 image: stateVar.image
             })
         })

@@ -35,8 +35,8 @@ const TaskDescription = (props) => {
                     <input
                         type="date"
                         name="expiry_date"
-                        max="3000-12-31"
-                        min="1000-01-01"
+                        max="2021-12-31"
+                        min="2016-01-01"
                         className="form-control"
                         onChange={props.onChange}
                     />

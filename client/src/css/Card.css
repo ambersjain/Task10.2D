@@ -20,3 +20,30 @@
   .cardList {
       display: inline;
   }
+  /* Style buttons */
+.deleteBtn {
+  background-color: #CA0B00; /* Red background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 16px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  position: absolute;
+  right: 10px;
+  top: 18px;
+}
+
+/* Darker background on mouse-over */
+.deleteBtn:hover {
+  background-color: rgba(179, 136, 136, 0.452);
+}
+
+.cardContainer {
+  position: relative;
+}
+
+.cardOpened {
+  padding: 10px;
+  border-left: 5px solid rgb(233 236 221 / 1) ;
+  background-color: rgb(233 236 221 / 1);
+}

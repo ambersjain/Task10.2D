@@ -21,21 +21,24 @@ const Card = (props) => {
     const [cardOpen, setCardOpen] = useState(false);
 
     if (!cardOpen) {
-        return (<div className="card" onClick={() => setCardOpen(true)}>
+        return (<div className="card cardContainer" onClick={() => setCardOpen(true)}>
             <div className="container">
                 <h4><b>{props.title}</b></h4>
                 <p>{props.description}</p>
                 <p>{props.date}</p>
-                <button onClick={() => deleteTask(props._id)}>Delete</button>
+                <button className="deleteBtn" onClick={() => deleteTask(props._id)}> <i className="fa fa-trash"></i></button>
             </div>
         </div>)
     } else {
-        return (<div>
-            <h1>This is the card details</h1>
-            <h3>{props.title}</h3>
-            <h3>{props.description}</h3>
-            <h3>{props.date}</h3>
-            <button onClick={() => setCardOpen(false)}>Close</button>
+        return (<div className="cardOpened">
+            <h2><u>Task Details</u></h2>
+            <h4>{props.title}</h4>
+            <p>{props.description}</p>
+            <p>This task expires by {props.date}</p>
+            <p>Workers Required :  {props.require_worker}</p>
+            <p>Reward per response :  {props.reward_per_response}</p>
+            <p>This task expires by {props.date}</p>
+            <button className="btn btn-secondary btn-sm mb-3" onClick={() => setCardOpen(false)}>Close</button>
         </div>)
     }
 }
@@ -45,8 +48,9 @@ const CardList = (props) => {
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
     const [filteredTasks, setFilteredTasks] = useState([]);
-    const [year, setYear] = useState("2020");
+    const [year, setYear] = useState("");
 
+    // loading the data into cards
     useEffect(() => {
         async function fetchData() {
             const response = await fetch('http://localhost:8080/reqtask');
@@ -63,10 +67,10 @@ const CardList = (props) => {
     useEffect(() => {
         setFilteredTasks(
             dataVar.filter((data) =>
-                !data.date || data.date.substring(0, 4) === year &&
-                data.title.toLowerCase().includes(search.toLowerCase())
+                (!data.date || data.date.substring(0, 4) === year) &&
+                (!data.title || data.title.toLowerCase().includes(search.toLowerCase()))
             ))
-    }, [year, search, dataVar]);
+    }, [search, year, dataVar]);
 
 
     const yearHandler = (e) => {
@@ -75,43 +79,64 @@ const CardList = (props) => {
     }
 
     const clearFilter = e => {
-        setYear("2020");
+        setYear("");
         setSearch("");
     };
 
-    return (<div className="cardList">
-        <Filter
-            setSearch={setSearch}
-            yearHandler={yearHandler}
-            year={year}
-            clearFilter={clearFilter}
-        />
-        {/* This syntax means if dataVar exists then only it will be rendered. */}
-        {loading ? <div>.......loading</div> :
-            <div>
-                {filteredTasks.map((job, index) => {
-                    return <Card
-                        key={job._id}
-                        {...job}
-                        dataVar={dataVar}
-                        setDataVar={setDataVar} ></Card>;
-                })}
-            </div>}
+    if (year) {
+        return (<div className="cardList">
+            <Filter
+                setSearch={setSearch}
+                yearHandler={yearHandler}
+                year={year}
+                clearFilter={clearFilter}
+            />
+            {loading ?
+                <div>.......loading</div> :
+                <div>
+                    {filteredTasks.map((job, index) => {
+                        return <Card
+                            key={job._id}
+                            {...job}
+                            dataVar={dataVar}
+                            setDataVar={setDataVar} ></Card>;
+                    })}
+                </div>}
 
-    </div>)
+        </div>)
+
+    } else {
+        return (<div className="cardList">
+            <Filter
+                setSearch={setSearch}
+                yearHandler={yearHandler}
+                year={year}
+                clearFilter={clearFilter}
+            />
+            {loading ?
+                <div>.......loading</div> :
+                <div>
+                    {dataVar.map((job, index) => {
+                        return <Card
+                            key={job._id}
+                            {...job}
+                            dataVar={dataVar}
+                            setDataVar={setDataVar} ></Card>;
+                    })}
+                </div>}
+
+        </div>)
+
+    }
 }
 
 const Filter = (props) => {
     return (
         <div className="container bg-light border mb-3">
-            <input
-                type="text"
-                placeholder="Search Titles"
-                onChange={(e) => props.setSearch(e.target.value)}
-            />
             <div>
-                <label> Year :  </label>
+                <label className="mr-3 mt-3 md-3"> Year :  </label>
                 <select defaultValue={props.year} onChange={props.yearHandler}>
+                    <option value="Select year">Select year</option>
                     <option value="2021">2021</option>
                     <option value="2020">2020</option>
                     <option value="2019">2019</option>
@@ -121,7 +146,16 @@ const Filter = (props) => {
                 </select>
             </div>
 
-            <button onClick={props.clearFilter}>Clear Filters</button>
+            <div className="mr-3 mt-3 mb-3">
+                <label className="mr-3">Search: </label>
+                <input
+                    type="text"
+                    placeholder="Search Titles"
+                    onChange={(e) => props.setSearch(e.target.value)}
+                />
+            </div>
+
+            <button className="btn btn-secondary btn-sm mb-3" onClick={props.clearFilter}>Clear Filters</button>
         </div>)
 }
 

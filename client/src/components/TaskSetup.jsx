@@ -46,7 +46,6 @@ function ImageUpload(props) {
     //To show the image
     const [uploadedFile, setUploadedFile] = useState({});
 
-
     const onChange = e => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
@@ -68,16 +67,15 @@ function ImageUpload(props) {
             const { fileName, filePath } = res.data;
             setUploadedFile({ fileName, filePath });
             console.log("File Uploaded");
-
-            //setMessage('File Uploaded');
         } catch (err) {
             console.log(err);
         }
     };
+
     if (props.qType === "imageUpload") {
         return (
             <div className="form-group row">
-                <label className="col-form-label col-sm-2">Upload an image to ask workers to tag things inside the image</label>
+                <label className="col-form-label col-sm-2">Upload an image to ask workers to tag things in the image</label>
                 <Fragment>
                     <form onSubmit={onSubmit}>
                         <div className='custom-file mb-4'>
@@ -92,12 +90,13 @@ function ImageUpload(props) {
                                 {filename}
                             </label>
                         </div>
-
+                        Save as: <input className="form-control" name="image" defaultValue={uploadedFile.filePath || ''} onChange={props.onChange} />
                         <input
                             type='submit'
                             value='Upload'
                             className='btn btn-primary btn-block mt-4'
                         />
+
                     </form>
                     {uploadedFile ? (
                         <div className='row mt-5'>

@@ -35,7 +35,8 @@ const reqTaskSchema = mongoose.Schema({
         type: String,
     },
     image: {
-        type: String
+        type: String,
+        maxlength:255,
     }
 });
 
